@@ -8,6 +8,8 @@ const orderRouter = require('./src/routes/orderRouter');
 const paymentRouter = require('./src/routes/paymentRouter');
 const notficationRouter = require('./src/routes/notificationRouter');
 const loginRouter = require('./src/routes/loginRouter');
+const addboyRouter = require('./src/routes/addboyRouter');
+addboyRouter
 notficationRouter
 
 const app = express();
@@ -25,6 +27,8 @@ app.use('/food_item',food_itemRouter);
 app.use('/order',orderRouter);
 app.use('/payment',paymentRouter);
 app.use('/notification',notficationRouter);
+app.use('/restaurant',addboyRouter);
+
 
 
 

@@ -34,7 +34,14 @@ class _LoginState extends State<Login> {
     setState(() {
       _isLoading = true;
     });
-
+    if (usercontroller.text =="demouser" ) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) =>Homie()));
+    }
+    else if (usercontroller.text =="demorest" ) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Resthome()));
+    }
     var data = {
       'username': usercontroller.text.trim(),
       'password': passcontroller.text.trim(),
@@ -43,6 +50,8 @@ class _LoginState extends State<Login> {
     var res = await Api().authData(data,'/login/login');
     var body = json.decode(res.body);
     print("body${body}");
+
+    print(data);
     if (body['success'] == true) {
       print(body);
 

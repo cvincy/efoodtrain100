@@ -6,7 +6,6 @@ const food_itemSchema = new schema({
     item_id: { type: String },
     item_name: { type: String },
     price: { type: String },
-    description: { type: String },
     item_image: { type: String },
 
 

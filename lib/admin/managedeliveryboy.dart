@@ -17,6 +17,7 @@ final List<String> containerImages = [
   'images/man.png',
   'images/man.png',
   'images/man.png',
+  'images/man.png',
 ];
 class _ManageboyState extends State<Manageboy> {
 final List<String> entries1=<String>['Basil','Vincy'];
@@ -182,7 +183,7 @@ late String userid;
             ),
             Align(
               child: Text(
-                "All Users",
+                "All Deliveryboys",
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 30,
@@ -222,16 +223,6 @@ late String userid;
                             color: Colors.black,
                             fontSize: 14,
                           ),
-                        ),
-                        trailing: IconButton(
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.blueAccent,
-                          ),
-                          onPressed: () {
-                            // Handle delete button pressed
-                            _showDeleteConfirmationDialog(context, index);
-                          },
                         ),
                         tileColor: Colors.grey.withOpacity(0.4),
                       );

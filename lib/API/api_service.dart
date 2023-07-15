@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 
+import 'package:efoodtrain/admin/model/adddeliveymodel.dart';
 import 'package:efoodtrain/admin/model/deliveryboymodel.dart';
+import 'package:efoodtrain/admin/model/itemmodel.dart';
 import 'package:efoodtrain/admin/model/restmodel.dart';
 import 'package:efoodtrain/admin/model/usermodel.dart';
 import 'package:http/http.dart' as http;
@@ -107,6 +109,48 @@ class ApiService {
       return products;
     } else {
       List<deliveryboyModel> products = [];
+      return products;
+    }
+  }
+  Future<List<userModel>> fetchcategory() async {
+    var response = await Api().getData('/category/view-category');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print((items));
+
+      List<userModel> products = List<userModel>.from(
+          items['data'].map((e) => userModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<userModel> products = [];
+      return products;
+    }
+    }
+  Future<List<itemModel>> fetchitem() async {
+    var response = await Api().getData('/food_item/view-item');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print(("items${items}"));
+
+      List<itemModel> products = List<itemModel>.from(
+          items['data'].map((e) => itemModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<itemModel> products = [];
+      return products;
+    }
+    }
+  Future<List<adddeliveryModel>> fetchboy() async {
+    var response = await Api().getData('/restaurant/view-item');
+    if (response.statusCode == 200) {
+      var items = json.decode(response.body);
+      print(("items${items}"));
+
+      List<adddeliveryModel> products = List<adddeliveryModel>.from(
+          items['data'].map((e) => adddeliveryModel.fromJson(e)).toList());
+      return products;
+    } else {
+      List<adddeliveryModel> products = [];
       return products;
     }
   }

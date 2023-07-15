@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:efoodtrain/admin/model/usermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -14,6 +15,7 @@ class Viewuser extends StatefulWidget {
 }
 
 class _ViewuserState extends State<Viewuser> {
+  ApiService client = ApiService();
   bool _isExpanded=false;
   List<String>entries=["Sudheepth","Vishnu","Shamliya","Vincy"];
   List<String>mob=["9846114630","9633601017","8086030380","7902641389"];
@@ -53,73 +55,85 @@ class _ViewuserState extends State<Viewuser> {
                 child: Text("Users",
                     style: TextStyle(fontWeight: FontWeight.w400, fontSize: 35,color: Colors.black)),
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                separatorBuilder: (context, index) {
-                  return SizedBox(
-                    width: 20,
-                  );
-                },
-                //   scrollDirection: Axis.vertical,
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Card(
-                      color: Colors.grey.withOpacity(0.4),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            // mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CircleAvatar(backgroundImage:AssetImage("images/profile.png")
-                              ),/*Container(
-                                    width: 80,
-                                    child: Image.asset(containerImages[index],
-                                        fit: BoxFit.cover),
-                                  ),*/
 
-                              Column(
-                                children: [
-                                  Text("Name:${entries[index]}",
-                                    style: TextStyle(
-                                      color: Colors.blueAccent[800],
-                                    ),
-                                  ),
-                                  Text("Mobile No:${mob[index]}",
-                                    style: TextStyle(
-                                      color: Colors.blueAccent[800],
-                                    ),
-                                  ),
-                                  Text("Email:${email[index]}",
-                                    style: TextStyle(
-                                      color: Colors.blueAccent[800],
-                                    ),
-                                  ),
+        FutureBuilder<List<userModel>>(
+        future: client.fetchuser(),
+    builder: (BuildContext context,
+    AsyncSnapshot<List<userModel>> snapshot) {
+      print("snap${snapshot}");
+      if (snapshot.hasData) {
+        return ListView.separated(
+          shrinkWrap: true,
+          separatorBuilder: (context, index) {
+            return SizedBox(
+              width: 20,
+            );
+          },
+          //   scrollDirection: Axis.vertical,
+          itemCount: snapshot.data!.length,
+          itemBuilder: (BuildContext context, int index) {
+           String uid = snapshot.data![index].name;
+            print(uid);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                color: Colors.grey.withOpacity(0.4),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CircleAvatar(
+                            backgroundImage: AssetImage("images/profile.png")
+                        ), /*Container(
+                                      width: 80,
+                                      child: Image.asset(containerImages[index],
+                                          fit: BoxFit.cover),
+                                    ),*/
 
-                                ],
+                        Column(
+                          children: [
+                            Text("Name:${entries[index]}",
+                              style: TextStyle(
+                                color: Colors.blueAccent[800],
                               ),
+                            ),
+                            Text("Mobile No:${mob[index]}",
+                              style: TextStyle(
+                                color: Colors.blueAccent[800],
+                              ),
+                            ),
+                            Text("Email:${email[index]}",
+                              style: TextStyle(
+                                color: Colors.blueAccent[800],
+                              ),
+                            ),
+
+                          ],
+                        ),
 
 
-                              Center(child: TextButton(onPressed:(){setState(() {
-                                _isExpanded=!_isExpanded;
-                              });
-
-                              }, child: Column(
-                                children: [
-
-
-                                ],
-                              ))),
+                        Center(child: TextButton(onPressed: () {
+                          setState(() {
+                            _isExpanded = !_isExpanded;
+                          });
+                        }, child: Column(
+                          children: [
+                          ],
+                        ))),
 
 
-                            ]),
-                      ),
-                    ),
-                  );
-                },
+                      ]),
+                ),
+              ),
+            );
+          },
+        );
+      }
+      return Center(child: CircularProgressIndicator());
+    }
               ),
             ]
         ),
